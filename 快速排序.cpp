@@ -1,48 +1,49 @@
 #include <iostream>
-#include <time.h>
+#include <vector>
+#include <algorithm>
+
+#define MAXSIZE		100
 
 using namespace std;
 
-int RangeInRange(int start, int end) {
-	srand((unsigned)time(NULL));
-	return start + rand() % (end - start);
-}
-
-int partition(int data[], int length, int start, int end) {
-	//for (int i = 0; i < length; i++) {
-	//	cout << data[i] << " ";
-	//}
-	//cout << endl;
-	if (length <= 0 || start < 0 || end >= length || data == nullptr) cerr << "error" << endl;
-	int index = RangeInRange(start, end);
-	swap(data[index], data[end]);
-
-	int small = start - 1;
+int partition(vector<int>& data, int length, int start, int end) {
+	if (length <= 0 || start < 0 || end >= length) cerr << "error" << endl;
+	int index = start - 1;
 	for (int i = start; i < end; ++i) {
 		if (data[i] < data[end]) {
-			swap(data[i], data[++small]);
+			swap(data[i], data[++index]);
 		}
 	}
-	swap(data[++small], data[end]);
-	return small;
+	swap(data[++index], data[end]);
+	return index;
 }
 
-void QuickSort(int data[], int length, int start, int end) {
+void QuickSort(vector<int> &data, int length, int start, int end) {
 	if (start == end) return;
 	int index = partition(data, length, start, end);
-	//cout << index << endl;
 	if (start < index) QuickSort(data, length, start, index - 1);
 	if (index < end) QuickSort(data, length, index + 1, end);
 }
 
 
-
 int main() {
-	int data[] = { 5, 8, 50, -98, 74, 22, 66, 43, 46, 21 };
-	QuickSort(data, 10, 0, 9);
+	vector<int> data;
+	srand(time(NULL));
+	for (int i = 0; i < MAXSIZE; ++i) {
+		data.push_back(rand() % (2 * MAXSIZE));
+	}
+	QuickSort(data, data.size(), 0, MAXSIZE - 1);
 	for (auto num : data) {
 		cout << num << " ";
 	}
 	cout << endl;
+	for (int i = 0; i < data.size() - 1; ++i) {
+		if (data[i] > data[i + 1]) {
+			cout << "error" << endl;
+			cout << i << endl;
+			break;
+		}
+	}
+	cout << "OK" << endl;
 	return 0;
 }
