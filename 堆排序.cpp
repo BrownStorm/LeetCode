@@ -98,7 +98,7 @@ int main() {
 	srand(time(NULL));
 	vector<int> arr;
 	for (int i = 0, num = 0; i < HEAPSIZE; ++i) {
-		arr.push_back(rand() % HEAPSIZE * 2);
+		arr.push_back(rand() % (HEAPSIZE * 2));
 	}
 	m_Heap h1(arr);
 	for (auto num : h1.m_heap) cout << num << " ";

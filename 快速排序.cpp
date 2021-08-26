@@ -3,12 +3,6 @@
 
 using namespace std;
 
-void Swap(int* a, int* b) {
-	int t = *a;
-	*a = *b;
-	*b = t;
-}
-
 int RangeInRange(int start, int end) {
 	srand((unsigned)time(NULL));
 	return start + rand() % (end - start);
